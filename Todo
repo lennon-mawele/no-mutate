@@ -1,0 +1,49 @@
+-Types
+Date
+
+-structtures
+Map/ Hash
+Stack
+Queue
+Set
+Range
+Collection
+Linked
+
+-Methods
+concat
+clean
+cleanAll
+copyWithin
+clone
+empty
+every
+enties
+filter
+find
+findIndexOf
+forEach
+is
+isEmpty
+includes
+indexOf
+join
+keys
+lastIndexOf
+map
+reduce
+reduceRight
+reverse
+slice
+some
+sort
+splice
+max (max items)
+
+-Error hander
+custom validate
+
+
+-Tests
+incorrect type or data tests
+Collection list with schema
