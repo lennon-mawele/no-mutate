@@ -23,7 +23,7 @@ type OBJECT = { [key: string]: any };
 
 test('Immutable Methods', (nested: OBJECT) => {
 
-  nested.test('Adds Items :: push([el0])(el) | push([el0])([el1, el1]) -> array.', (assert: OBJECT) => {
+  nested.test('Adds Items :: push([el0])(el) | push([el0])([el1, el1]) -> array', (assert: OBJECT) => {
     const list = [1];
 
     deepFreeze(list);
@@ -49,7 +49,7 @@ test('Immutable Methods', (nested: OBJECT) => {
     assert.end();
   });
 
-  nested.test('Push Items :: push([el0])(el) | push([el0])([el1, el1]) -> array.', (assert: OBJECT) => {
+  nested.test('Push Items :: push([el0])(el) | push([el0])([el1, el1]) -> array', (assert: OBJECT) => {
     const list = [1];
 
     deepFreeze(list);
@@ -75,7 +75,7 @@ test('Immutable Methods', (nested: OBJECT) => {
   });
 
 
-  nested.test('Concate lists :: concat([ [el0], [el1, el2] ]) -> array ', (assert: OBJECT) => {
+  nested.test('Concate lists :: concat([ [el0], [el1, el2] ]) -> array', (assert: OBJECT) => {
     const list1 = [1, 2, 3, 4, 5, 6];
     const list2 = ['A', 'B', 'C'];
 
@@ -92,7 +92,7 @@ test('Immutable Methods', (nested: OBJECT) => {
   });
 
 
-  nested.test('Inserts items :: insert([i0])(i1, indx) | insert([i0])([i1, i2], indx) -> array.', (assert: OBJECT) => {
+  nested.test('Inserts items :: insert([i0])(i1, indx) | insert([i0])([i1, i2], indx) -> array', (assert: OBJECT) => {
     const list = [1, 2, 3, 4, 5, 6];
 
     deepFreeze(list);
@@ -117,7 +117,7 @@ test('Immutable Methods', (nested: OBJECT) => {
     assert.end();
   });
 
-  nested.test('Unshift items :: unshift([i0])(i1, indx) | unshift([i0])([i1, i2], indx) -> array.', (assert: OBJECT) => {
+  nested.test('Unshift items :: unshift([i0])(i1, indx) | unshift([i0])([i1, i2], indx) -> array', (assert: OBJECT) => {
     const list = [1, 2, 3, 4, 5, 6];
 
     deepFreeze(list);
