@@ -20,6 +20,55 @@ export function add (list: LIST): MODIFY_LIST {
 };
 
 
+// Merge objects
+export function assign (obj: OBJECT): MODIFY_OBJECT {
+  return (updateObj: OBJECT): OBJECT => {
+    if (updateObj == null) return { ...obj };
+
+    return {...obj, ...updateObj};
+  };
+};
+
+
+// Concatantes multiple lists
+export function concat (list: LIST): MODIFY_LIST {
+  return list.reduce((a: LIST, b: LIST) => a.concat(b), []);
+};
+
+
+// Entries Array Iterator key/value pairs
+export function entries (list: LIST): MODIFY_LIST {
+  return list.entries();
+};
+
+
+// Every item must pass test
+export function every (list: LIST): MODIFY_LIST {
+  return (test: OBJECT): string | bool => {
+    if (test == null) throw Error('no test for "every" function provided');
+
+    return list.every(test);
+  };
+};
+
+
+// Inserts Array Iterator key/value pairs
+export function insert (list: LIST): MODIFY_LIST {
+  return (items: any, index: number): LIST => {
+    if (items == null) return [...list];
+
+    return [...list.slice(0, index), ...items, ...list.slice(index)];
+
+  };
+};
+
+
+// Pop alias for remove last
+export function pop (list: LIST): MODIFY_LIST {
+  return remove(list)('last');
+};
+
+
 // Push alias for add
 export function push (list: LIST): MODIFY_LIST {
   return (item: any) => add(list)(item);
@@ -41,30 +90,13 @@ export function remove (list: LIST): MODIFY_LIST {
 };
 
 
-// Pop alias for remove last
-export function pop (list: LIST): MODIFY_LIST {
-  return remove(list)('last');
-};
-
-
 // Shift alias for remove first
 export function shift (list: LIST): MODIFY_LIST {
   return remove(list)('first');
 };
 
 
-// Inserts items from a list
-export function insert (list: LIST): MODIFY_LIST {
-  return (items: any, index: number): LIST => {
-    if (items == null) return [...list];
-
-    return [...list.slice(0, index), ...items, ...list.slice(index)];
-
-  };
-};
-
-
-// Shift alias for remove first
+// Unshift alias for insert first
 export function unshift (list: LIST): MODIFY_LIST {
   return (items: any) => insert(list)(items, 0);
 };
@@ -76,21 +108,5 @@ export function update (list: LIST): MODIFY_LIST {
     if (item == null) return [...list];
 
     return [...list.slice(0, index), item, ...list.slice(index + 1)];
-  };
-};
-
-
-// Merge multiple lists
-export function merge (list: LIST): MODIFY_LIST {
-  return list.reduce((a: LIST, b: LIST) => a.concat(b), []);
-};
-
-
-// Merge objects
-export function assign (obj: OBJECT): MODIFY_OBJECT {
-  return (updateObj: OBJECT): OBJECT => {
-    if (updateObj == null) return { ...obj };
-
-    return {...obj, ...updateObj};
   };
 };

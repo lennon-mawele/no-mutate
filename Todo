@@ -11,12 +11,10 @@ Collection
 Linked
 
 -Methods
-concat
 clean
 cleanAll
 copyWithin
 clone
-empty
 every
 enties
 filter

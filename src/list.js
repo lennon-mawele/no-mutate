@@ -5,8 +5,8 @@
 import errorHandler from './errorHandler';
 import {
   add,
+  concat,
   insert,
-  merge,
   pop,
   push,
   remove,
@@ -20,6 +20,8 @@ import {
 type OBJECT = { [key: string]: any };
 type OPTIONS = { type: ?string, methods: ?OBJECT };
 declare function FROZEN_OBJECT(key: string, value: any): OBJECT;
+declare function FN_BOOL(year: string): bool;
+type LIST = Array<any>;
 
 
 // Number List methods
@@ -38,18 +40,46 @@ const createList = (data: Array<any>, options: OPTIONS): FROZEN_OBJECT => {
   return Object.freeze(Object.assign(
     {},
     {
-      data   : data,
-      size   : data.length,
-      add    : (newData: Array<any>) => createList(add(data)(newData), { type }),
-      insert : (newData: Array<any>, index: number) => createList(insert(data)(newData, index), { type }),
-      merge  : (newData: Array<any>) => createList(merge([data, ...newData]), { type }),
-      pop    : () => createList(pop(data), { type }),
-      push   : (newData: Array<any>) => createList(push(data)(newData), { type }),
-      remove : (newData: Array<any>) => createList(remove(data)(newData), { type }),
-      shift  : () => createList(shift(data), { type }),
-      unshift: (newData: Array<any>) => createList(unshift(data)(newData), { type }),
-      update : (newData: Array<any>, index: number) => createList(update(data)(newData, index), { type }),
-      type   : type,
+      data    : data,
+      size    : data.length,
+      type    : type,
+
+      add: (newData: LIST) => createList(add(data)(newData), { type }),
+
+      concat: (newData: LIST) => createList(concat([data, ...newData]), { type }),
+
+      entries: () => data.entries(),
+
+      every: (fn: FN_BOOL): bool => data.every(fn),
+
+      fill: (value: any, start: number, end: number) => createList(data.fill(value, start, end), { type }),
+
+      filter: (fn: FN_BOOL) => createList(data.filter(fn), { type }),
+
+      find: (fn: FN_BOOL) => createList(data.find(fn), { type }),
+
+      findIndex: (fn: FN_BOOL) => createList(data.findIndex(fn), { type }),
+
+      forEach: (fn: FN_BOOL) => data.forEach(fn),
+
+      includes: (item: any) => data.includes(item),
+
+      indexOf: (item: any) => data.indexOf(item),
+
+      insert: (newData: LIST, index: number) => createList(insert(data)(newData, index), { type }),
+
+      pop: () => createList(pop(data), { type }),
+
+      push: (newData: LIST) => createList(push(data)(newData), { type }),
+
+      remove: (newData: LIST) => createList(remove(data)(newData), { type }),
+
+      shift: () => createList(shift(data), { type }),
+
+      unshift: (newData: LIST) => createList(unshift(data)(newData), { type }),
+
+      update: (newData: LIST, index: number) => createList(update(data)(newData, index), { type }),
+
       ...numberMethods(data, type),
       ...methods
     }
