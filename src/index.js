@@ -1,8 +1,8 @@
-import * as helpers from './helpers';
+import * as methods from './methods';
 import * as list from './list';
 
 
 export default {
-  ...helpers,
+  ...methods,
   ...list
 };

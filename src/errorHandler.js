@@ -3,8 +3,7 @@
 // Flow types
 type OBJECT = { [key: string]: any };
 
-
-export default function errorHandler (args: OBJECT): void {
+export function errorHandler (args: OBJECT): void {
   const { data, type, schema } = args;
 
   const types = {
@@ -22,8 +21,6 @@ export default function errorHandler (args: OBJECT): void {
 
 
   if (!types[type] && type != null) {
-
-    
     throw new Error(`List Type Error: Type ${type} is not a valid List type. Types must be string, number, boolean, date or any`);
   }
 
@@ -37,5 +34,22 @@ export default function errorHandler (args: OBJECT): void {
 
   if (type === 'collection' && schema == null) {
     throw new Error('List Collection Error: Collection must have a valid schema.');
+  }
+};
+
+
+export function helpersError (method: string, type: string): string {
+  return `${method} method is missing ${type} argument.`;
+}
+
+
+export function indexError (method: string): string {
+  return `${method} methods index argument is not a number type.`;
+}
+
+
+export function sizeError (size: number | void): string {
+  if (size != null && typeof size !== 'number') {
+    throw new Error('List max size Error:.');
   }
 };

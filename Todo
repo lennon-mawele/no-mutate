@@ -11,37 +11,14 @@ Collection
 Linked
 
 -Methods
-clean
-cleanAll
-copyWithin
-clone
-every
-enties
-filter
-find
-findIndexOf
-forEach
 is
-isEmpty
-includes
-indexOf
-join
-keys
-lastIndexOf
-map
-reduce
-reduceRight
-reverse
-slice
-some
-sort
-splice
 max (max items)
+
+
 
 -Error hander
 custom validate
 
 
 -Tests
-incorrect type or data tests
 Collection list with schema
