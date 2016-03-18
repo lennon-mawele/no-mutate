@@ -1,7 +1,7 @@
 'use strict';
 
 import {
-  errorHandler,
+  typeCheckError,
   sizeError
 } from './errorHandler';
 
@@ -21,7 +21,11 @@ import {
 
 // Flow types
 type OBJECT = { [key: string]: any };
-type OPTIONS = { type: ?string, methods: ?OBJECT };
+type OPTIONS = {
+  type: ?string,
+  methods: ?OBJECT,
+  schema: ?OBJECT
+};
 declare function FROZEN_OBJECT(key: string, value: any): OBJECT;
 declare function FN_BOOL(year: string): bool;
 type LIST = Array<any>;
@@ -105,7 +109,7 @@ export function List (data: Array<any>, opts: ?OPTIONS): FROZEN_OBJECT {
   const schema = opts ? opts.schmea || null : null;
   const size = opts ? opts.size || null : null;
 
-  errorHandler({ data, type, schema, size });
+  typeCheckError({ data, type, schema, size });
 
   return createList(data || [], { type, methods, size, schema });
 };

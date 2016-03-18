@@ -3,7 +3,7 @@
 'use strict';
 
 import {
-  helpersError,
+  methodsError,
   indexError
 } from './errorHandler';
 
@@ -28,7 +28,7 @@ export function assign (obj: OBJECT): MODIFY_OBJECT {
 // Concatantes multiple lists
 export function concat (list: LIST): MODIFY_LIST {
   if (list == null || !Array.isArray(list)) {
-    throw new Error(helpersError('concat', 'list'));
+    throw new Error(methodsError('concat', 'list'));
   }
 
   return list.reduce((a: LIST, b: LIST) => a.concat(b), []);
@@ -37,15 +37,15 @@ export function concat (list: LIST): MODIFY_LIST {
 
 // Inserts Array Iterator key/value pairs
 export function insert (index: number): MODIFY_LIST {
-  if (index == null) throw new Error(helpersError('insert', 'index'));
+  if (index == null) throw new Error(methodsError('insert', 'index'));
   if (typeof index !== 'number') throw new Error(indexError('insert'));
 
   return (items: any, list: LIST): LIST => {
     if (list == null || !Array.isArray(list)) {
-      throw new Error(helpersError('insert', 'list'));
+      throw new Error(methodsError('insert', 'list'));
     }
 
-    if (items == null) throw new Error(helpersError('insert', 'items'));
+    if (items == null) throw new Error(methodsError('insert', 'items'));
 
     return [...list.slice(0, index), ...items, ...list.slice(index)];
 
@@ -56,7 +56,7 @@ export function insert (index: number): MODIFY_LIST {
 // Pop alias for remove last
 export function pop (list: LIST): MODIFY_LIST {
   if (list == null || !Array.isArray(list)) {
-    throw new Error(helpersError('pop', 'list'));
+    throw new Error(methodsError('pop', 'list'));
   }
 
   return [...list.slice(0, list.length - 1)];
@@ -65,11 +65,11 @@ export function pop (list: LIST): MODIFY_LIST {
 
 // Push alias for add
 export function push (items: any): MODIFY_LIST {
-  if (items == null) throw new Error(helpersError('push', 'items'));
+  if (items == null) throw new Error(methodsError('push', 'items'));
 
   return (list: LIST): LIST => {
     if (list == null || !Array.isArray(list)) {
-      throw new Error(helpersError('push', 'list'));
+      throw new Error(methodsError('push', 'list'));
     }
 
     if (Array.isArray(items)) return [...list, ...items];
@@ -81,12 +81,12 @@ export function push (items: any): MODIFY_LIST {
 
 // Removes items from a list
 export function remove (index: number): MODIFY_LIST {
-  if (index == null) throw new Error(helpersError('remove', 'index'));
+  if (index == null) throw new Error(methodsError('remove', 'index'));
   if (typeof index !== 'number') throw new Error(indexError('remove'));
 
   return (list: LIST): LIST => {
     if (list == null || !Array.isArray(list)) {
-      throw new Error(helpersError('remove', 'list'));
+      throw new Error(methodsError('remove', 'list'));
     }
 
     return [...list.slice(0, index), ...list.slice(index + 1)];
@@ -97,7 +97,7 @@ export function remove (index: number): MODIFY_LIST {
 // Reverse a lists order
 export function reverse (list: LIST): MODIFY_LIST {
   if (list == null || !Array.isArray(list)) {
-    throw new Error(helpersError('reverse', 'list'));
+    throw new Error(methodsError('reverse', 'list'));
   }
 
   const mapped = list.map((el: string| number) => el);
@@ -108,7 +108,7 @@ export function reverse (list: LIST): MODIFY_LIST {
 // Shift alias for remove first
 export function shift (list: LIST): MODIFY_LIST {
   if (list == null || !Array.isArray(list)) {
-    throw new Error(helpersError('shift', 'list'));
+    throw new Error(methodsError('shift', 'list'));
   }
 
   return [...list.slice(0, 0), ...list.slice(1)];
@@ -118,7 +118,7 @@ export function shift (list: LIST): MODIFY_LIST {
 // Sort list in to order
 export function sort (list: LIST): MODIFY_LIST {
   if (list == null || !Array.isArray(list)) {
-    throw new Error(helpersError('sort', 'list'));
+    throw new Error(methodsError('sort', 'list'));
   }
 
   const mapped = list.map(function (el: any, i: number): OBJECT {
@@ -140,11 +140,11 @@ export function sort (list: LIST): MODIFY_LIST {
 
 // Unshift alias for insert first
 export function unshift (items: LIST): MODIFY_LIST {
-  if (items == null) throw new Error(helpersError('unshift', 'items'));
+  if (items == null) throw new Error(methodsError('unshift', 'items'));
 
   return (list: any): LIST => {
     if (list == null || !Array.isArray(list)) {
-      throw new Error(helpersError('unshift', 'list'));
+      throw new Error(methodsError('unshift', 'list'));
     }
 
     return insert(0)(items, list);
@@ -154,11 +154,11 @@ export function unshift (items: LIST): MODIFY_LIST {
 
 // Update an item in a list
 export function update (index: number): MODIFY_LIST {
-  if (index == null) throw new Error(helpersError('update', 'index'));
+  if (index == null) throw new Error(methodsError('update', 'index'));
 
   return (item: any, list: LIST): LIST => {
     if (list == null || !Array.isArray(list)) {
-      throw new Error(helpersError('update', 'list'));
+      throw new Error(methodsError('update', 'list'));
     }
 
     if (item == null) return [...list];
