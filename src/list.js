@@ -103,6 +103,7 @@ export function List (data: Array<any>, opts: ?OPTIONS): FROZEN_OBJECT {
   return createList(data || [], { type, methods, size, schema });
 };
 
+
 export function Booleans (data: Array<any>, methods: OBJECT): FROZEN_OBJECT {
   const options = { type: 'boolean', methods };
 
