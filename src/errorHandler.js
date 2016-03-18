@@ -4,20 +4,6 @@
 type OBJECT = { [key: string]: any };
 
 
-function typeError (type: string) {
-  const types = {
-    string: true,
-    number: true,
-    boolean: true,
-    collection: true,
-    any: true
-  };
-
-  if (!types[type] && type != null) {
-    throw new Error(`List Type Error: Type ${type} is not a valid List type. Types must be string, number, boolean, date or any`);
-  }
-}
-
 function arrayError (data: Array<any>, type: string) {
   if (Array.isArray(data)) {
     data.forEach((i: any): void => {
@@ -32,8 +18,30 @@ function collectiosError (type: string, schema: OBJECT) {
   }
 }
 
+function maxSizeError (size: number | void): string {
+  if (size != null && typeof size !== 'number') {
+    throw new Error('List max size Error:.');
+  }
+};
+
+
+function typeError (type: string) {
+  const types = {
+    string: true,
+    number: true,
+    boolean: true,
+    collection: true,
+    any: true
+  };
+
+  if (!types[type] && type != null) {
+    throw new Error(`List Type Error: Type ${type} is not a valid List type. Types must be string, number, boolean, date or any`);
+  }
+}
+
+
 export function typeCheckError (args: OBJECT): void {
-  const { data, type, schema } = args;
+  const { data, type, schema, size } = args;
 
   if (!Array.isArray(data) && data != null) {
     throw new Error(`List Data Error: Data ${data} is not a array.`);
@@ -42,6 +50,7 @@ export function typeCheckError (args: OBJECT): void {
   arrayError(data, type);
   typeError(type);
   collectiosError(type, schema);
+  maxSizeError(size);
 };
 
 
@@ -53,10 +62,3 @@ export function methodsError (method: string, type: string): string {
 export function indexError (method: string): string {
   return `${method} methods index argument is not a number type.`;
 }
-
-
-export function sizeError (size: number | void): string {
-  if (size != null && typeof size !== 'number') {
-    throw new Error('List max size Error:.');
-  }
-};
