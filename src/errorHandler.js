@@ -4,7 +4,7 @@
 type OBJECT = { [key: string]: any };
 
 
-function arrayError (data: Array<any>, type: string) {
+function elementTypeError (data: Array<any>, type: string) {
   if (Array.isArray(data)) {
     data.forEach((i: any): void => {
       if (type !== 'any' && typeof i !== type) throw new Error(`Type Error: ${i} is not of type ${type}`);
@@ -34,7 +34,7 @@ function typeError (type: string) {
     any: true
   };
 
-  if (!types[type] && type != null) {
+  if (!types[type] && type.toString() != null) {
     throw new Error(`List Type Error: Type ${type} is not a valid List type. Types must be string, number, boolean, date or any`);
   }
 }
@@ -47,7 +47,7 @@ export function typeCheckError (args: OBJECT): void {
     throw new Error(`List Data Error: Data ${data} is not a array.`);
   }
 
-  arrayError(data, type);
+  elementTypeError(data, type);
   typeError(type);
   collectiosError(type, schema);
   maxSizeError(size);
