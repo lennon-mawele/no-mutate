@@ -620,6 +620,28 @@ test('Immutable List', (nested: OBJECT) => {
   });
 
 
+  nested.test('List collcetion :: List([e0], { type: "collcetion": schema: object }) -> List', (assert: OBJECT) => {
+    const schemaObj = {
+      name    : { type: 'string', required: true },
+      quantity: { type: 'number', required: true },
+      country : 'string'
+    };
+
+    const data = [
+      { name: 'apples', quantity: 2, country: 'england' },
+      { name: 'bananas', quantity: 5, country: 'jamaica' },
+      { name: 'cherries', quantity: 1, country: 'spain' }
+    ];
+
+    const schema = List(data, { type: 'collection', schema: schemaObj }).schema;
+    const expectSchema = schema;
+    assert.deepEqual(schema, expectSchema,
+      'Returns Collections schema');
+
+    assert.end();
+  });
+
+
   nested.test('shift :: List([e0, e1, e2]).shift() -> LIST', (assert: OBJECT) => {
 
     const shiftItem = List([1, 2, 3, 4, 5, 6]).shift().data;

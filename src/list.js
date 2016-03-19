@@ -39,7 +39,7 @@ const numberMethods = (list: Array<any>, options: OPTIONS): OBJECT => {
 
 // Creates a new List
 const createList = (data: Array<any>, options: OPTIONS): FROZEN_OBJECT => {
-  const { type, methods, size } = options;
+  const { type, methods, size, schema } = options;
 
   return Object.freeze(Object.assign(
     {},
@@ -48,6 +48,7 @@ const createList = (data: Array<any>, options: OPTIONS): FROZEN_OBJECT => {
       size    : data.length,
       type    : type,
       maxSize : size,
+      schema  : schema,
 
       concat: (newData: LIST) => createList(concat([data, ...newData]), options),
       entries: () => data.entries(),
