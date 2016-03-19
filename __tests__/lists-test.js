@@ -32,23 +32,6 @@ test('Immutable List', (nested: OBJECT) => {
     assert.end();
   });
 
-  nested.test('List middleWare || :: List([e0, e1], { middleWare: [fn, fn] }) -> List', (assert: OBJECT) => {
-
-    const middleWare = [
-      (x: any) => x.toUpperCase(),
-      (x: any) => `${x}_VIGINIE`
-    ];
-
-    const list = List(['otis', 'ania', 'jocelyne'], { middleWare });
-
-    const actualList = list.data;
-    const expectedList = ['OTIS_VIGINIE', 'ANIA_VIGINIE', 'JOCELYNE_VIGINIE'];
-    assert.deepEqual(actualList, expectedList,
-      'Transforms elements with middleWare');
-
-    assert.end();
-  });
-
 
   nested.test('List boolean :: List([e0], { type: "boolean" }) -> List', (assert: OBJECT) => {
     const bool = List([true], { type: 'boolean' });
@@ -238,6 +221,24 @@ test('Immutable List', (nested: OBJECT) => {
     assert.deepEqual(missingRequireField, expectMissingRequireField,
       'Does not pass if require field is missing not in schema');
 
+
+    assert.end();
+  });
+
+
+  nested.test('List middleWare || :: List([e0, e1], { middleWare: [fn, fn] }) -> List', (assert: OBJECT) => {
+
+    const middleWare = [
+      (x: any) => x.toUpperCase(),
+      (x: any) => `${x}_VIGINIE`
+    ];
+
+    const list = List(['otis', 'ania', 'jocelyne'], { middleWare });
+
+    const actualList = list.data;
+    const expectedList = ['OTIS_VIGINIE', 'ANIA_VIGINIE', 'JOCELYNE_VIGINIE'];
+    assert.deepEqual(actualList, expectedList,
+      'Transforms elements with middleWare');
 
     assert.end();
   });
@@ -538,31 +539,6 @@ test('Immutable List', (nested: OBJECT) => {
 
     assert.end();
   });
-
-
-  // nested.test('maxLength :: List([e0], { size: number }) -> List', (assert: OBJECT) => {
-  //   const list = List([], { size: 3 });
-  //
-  //   // const testThrow = (): OBJECT | string => {
-  //   //   try {
-  //   //     return list.push([1, 2, 3, 4]), { type: 'boolean' });
-  //   //   } catch (err) {
-  //   //     return err.toString();
-  //   //   }
-  //   // };
-  //   //
-  //   // const notBoolean = testThrow();
-  //   // const expectNotBoolean = 'Error: Type Error: 1 is not of type boolean';
-  //   // assert.deepEqual(notBoolean, expectNotBoolean,
-  //   //   'Boolean List can only contain booleans.)');
-  //
-  //   const maxList = list.push([1, 2, 3, 4]).maxSize();
-  //   const expectMax = 3;
-  //   assert.deepEqual(maxList, expectMax,
-  //     'Number List can only contain numbers.');
-  //
-  //   assert.end();
-  // });
 
 
   nested.test('pop :: List([e0, e1, e2]).pop() -> LIST', (assert: OBJECT) => {
