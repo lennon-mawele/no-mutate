@@ -32,6 +32,23 @@ test('Immutable List', (nested: OBJECT) => {
     assert.end();
   });
 
+  nested.test('List middleWare || :: List([e0, e1], { middleWare: [fn, fn] }) -> List', (assert: OBJECT) => {
+
+    const middleWare = [
+      (x: any) => x.toUpperCase(),
+      (x: any) => `${x}_VIGINIE`
+    ];
+
+    const list = List(['otis', 'ania', 'jocelyne'], { middleWare });
+
+    const actualList = list.data;
+    const expectedList = ['OTIS_VIGINIE', 'ANIA_VIGINIE', 'JOCELYNE_VIGINIE'];
+    assert.deepEqual(actualList, expectedList,
+      'Transforms elements with middleWare');
+
+    assert.end();
+  });
+
 
   nested.test('List boolean :: List([e0], { type: "boolean" }) -> List', (assert: OBJECT) => {
     const bool = List([true], { type: 'boolean' });
