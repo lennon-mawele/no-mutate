@@ -1,6 +1,6 @@
 'use strcit';
 
-import schemaValidation from '../../is-schema';
+import schemaValidation from './schemaValidation';
 
 
 // Flow types
