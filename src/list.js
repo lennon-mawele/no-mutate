@@ -1,8 +1,6 @@
 'use strict';
 
-import {
-  typeCheckError
-} from './errorHandler';
+import { typeCheckError } from './errorHandler';
 
 import {
   concat,
@@ -91,12 +89,12 @@ const createList = (data: Array<any>, options: OPTIONS): FROZEN_OBJECT => {
 };
 
 
-// List data structtures
+// List data structures
 export function List (data: Array<any>, opts: ?OPTIONS): FROZEN_OBJECT {
   const type = opts ? opts.type || 'any' : 'any';
   const methods = opts ? opts.methods || {} : {};
-  const schema = opts ? opts.schmea || null : null;
   const size = opts ? opts.size || Infinity : Infinity;
+  const schema = opts ? opts.schema || null : null;
 
   typeCheckError({ data, type, schema, size });
 

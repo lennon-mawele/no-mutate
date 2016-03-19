@@ -32,6 +32,7 @@ test('Immutable List', (nested: OBJECT) => {
     assert.end();
   });
 
+
   nested.test('List boolean :: List([e0], { type: "boolean" }) -> List', (assert: OBJECT) => {
     const bool = List([true], { type: 'boolean' });
 
@@ -46,12 +47,12 @@ test('Immutable List', (nested: OBJECT) => {
     const notBoolean = testThrow();
     const expectNotBoolean = 'Error: Type Error: 1 is not of type boolean';
     assert.deepEqual(notBoolean, expectNotBoolean,
-      'Boolean List can only contain booleans.)');
+      'Booleans List can only contain booleans.)');
 
     const isBoolean = bool.data;
     const expectIsBoolean = [true];
     assert.deepEqual(isBoolean, expectIsBoolean,
-      'Creates a new Boolean List');
+      'Creates a new Booleans List');
 
 
     assert.end();
@@ -73,20 +74,20 @@ test('Immutable List', (nested: OBJECT) => {
     const notNumber = testThrow();
     const expectNotNumber = 'Error: Type Error: otis is not of type number';
     assert.deepEqual(notNumber, expectNotNumber,
-      'Number List can only contain numbers.');
+      'Numbers List can only contain numbers.');
 
 
     const isNumber = num.data;
     const expectIsNumber = [1];
     assert.deepEqual(isNumber, expectIsNumber,
-      'Creates a new Number List.');
+      'Creates a new Numbers List.');
 
 
     assert.end();
   });
 
 
-  nested.test('List stings :: List([e0], { type: "string" }) -> List', (assert: OBJECT) => {
+  nested.test('List string :: List([e0], { type: "string" }) -> List', (assert: OBJECT) => {
     const str = List(['a'], { type: 'string' });
 
     const testThrow = (): OBJECT | string => {
@@ -101,17 +102,128 @@ test('Immutable List', (nested: OBJECT) => {
     const notString = testThrow();
     const expectNotString = 'Error: Type Error: 1 is not of type string';
     assert.deepEqual(notString, expectNotString,
-      'String List can only contain strings.');
+      'Strings List can only contain strings.');
 
 
     const isString = str.data;
     const expectIsString = ['a'];
     assert.deepEqual(isString, expectIsString,
-      'Creates a new String List');
+      'Creates a new Strings List');
 
     assert.end();
   });
 
+
+  nested.test('List object :: List([e0], { type: "object" }) -> List', (assert: OBJECT) => {
+    const data = [
+      {name: 'apples', quantity: 2},
+      {name: 'bananas', quantity: 0},
+      {name: 'cherries', quantity: 5}
+    ];
+
+    const obj = List(data, { type: 'object' });
+
+    const testThrow = (): OBJECT | string => {
+      try {
+        return List([1], { type: 'object' });
+
+      } catch (err) {
+        return err.toString();
+      }
+    };
+
+    const notObject = testThrow();
+    const expectNotObject = 'Error: Type Error: 1 is not of type object';
+    assert.deepEqual(notObject, expectNotObject,
+      'Objects List can only contain objects.');
+
+
+    const isObject = obj.data;
+    const expectIsObject = data;
+    assert.deepEqual(isObject, expectIsObject,
+      'Creates a new Objects List');
+
+    assert.end();
+  });
+
+  nested.test('List collcetion :: List([e0], { type: "collcetion": schema: object }) -> List', (assert: OBJECT) => {
+    const schema = {
+      name    : { type: 'string', required: true },
+      quantity: { type: 'number', required: true },
+      country : 'string'
+    };
+
+    const data = [
+      { name: 'apples', quantity: 2, country: 'england' },
+      { name: 'bananas', quantity: 5, country: 'jamaica' },
+      { name: 'cherries', quantity: 1, country: 'spain' }
+    ];
+
+    const collection = List(data, { type: 'collection', schema }).data;
+    const expectCollection = data;
+    assert.deepEqual(collection, expectCollection,
+      'Create a List collections and returns a List');
+
+
+    const dataWithExtraField = [
+      { name: 'apples', quantity: 2 },
+      { name: 'bananas', quantity: 5, country: 'jamaica', taste: 'yuk' }
+    ];
+
+    const testThrow1 = (): OBJECT | string => {
+      try {
+        return List(dataWithExtraField, { type: 'collection', schema }).data;
+      } catch (err) {
+        return err.toString();
+      }
+    };
+
+    const invalidKey = testThrow1();
+    const expectInvalidKey = 'Error: Invalid Schema Error: taste key is not a schema key.';
+    assert.deepEqual(invalidKey, expectInvalidKey,
+      'Does not pass keys not in schema');
+
+
+    const dataWithINcorrectType = [
+      { name: 'apples', quantity: '2' },
+      { name: 'bananas', quantity: 5, country: 'jamaica' }
+    ];
+
+    const testThrow2 = (): OBJECT | string => {
+      try {
+        return List(dataWithINcorrectType, { type: 'collection', schema }).data;
+      } catch (err) {
+        return err.toString();
+      }
+    };
+
+    const invalidType = testThrow2();
+    const expectInvalidType = 'Error: Invalid Schema Error: quantity value is not number type.';
+    assert.deepEqual(invalidType, expectInvalidType,
+      'Does not pass value if type is not the same as schema key/value');
+
+
+    const dataMissingRequiredField = [
+      { quantity: 3 },
+      { name: 'bananas', quantity: 3, country: 'jamaica' }
+    ];
+
+    const testThrow3 = (): OBJECT | string => {
+      try {
+        return List(dataMissingRequiredField, { type: 'collection', schema }).data;
+      } catch (err) {
+        return err.toString();
+      }
+    };
+
+    const missingRequireField = testThrow3();
+    const expectMissingRequireField = 'Error: Schema Required Field Error: Required field name is missing.';
+    assert.deepEqual(missingRequireField, expectMissingRequireField,
+      'Does not pass if require field is missing not in schema');
+
+
+    assert.end();
+  });
 
   nested.test('Booleans :: Booleans() ->', (assert: OBJECT) => {
     const bool = Booleans([true]);

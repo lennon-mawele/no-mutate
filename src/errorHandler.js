@@ -1,22 +1,36 @@
 'use strcit';
 
+import { schemaValidation } from './schemaValidation';
+
+
 // Flow types
 type OBJECT = { [key: string]: any };
 
 
 function elementTypeError (data: Array<any>, type: string) {
+  const dataType = type === 'collection' ? 'object' : type;
+
   if (Array.isArray(data)) {
     data.forEach((i: any): void => {
-      if (type !== 'any' && typeof i !== type) throw new Error(`Type Error: ${i} is not of type ${type}`);
+      if (type !== 'any' && typeof i !== dataType) {
+        throw new Error(`Type Error: ${i} is not of type ${type}`);
+      }
     });
   }
 }
 
-function collectiosError (type: string, schema: OBJECT) {
-  if (type === 'collection' && schema == null) {
-    throw new Error('List Collection Error: Collection must have a valid schema.');
+
+function collectionsError (data: Array<OBJECT>, type: string, schema: OBJECT) {
+  if (type === 'collection') {
+    if (schema) {
+      schemaValidation(data, schema);
+
+    } else {
+      throw new Error('List Collection Error: Collection must have a valid schema.');
+    }
   }
 }
+
 
 function maxSizeError (size: number | void): string {
   if (size != null && typeof size !== 'number') {
@@ -30,6 +44,7 @@ function typeError (type: string) {
     string: true,
     number: true,
     boolean: true,
+    object: true,
     collection: true,
     any: true
   };
@@ -49,7 +64,7 @@ export function typeCheckError (args: OBJECT): void {
 
   elementTypeError(data, type);
   typeError(type);
-  collectiosError(type, schema);
+  collectionsError(data, type, schema);
   maxSizeError(size);
 };
 
