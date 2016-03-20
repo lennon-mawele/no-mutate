@@ -33,7 +33,8 @@ declare function FN_LIST(data: Array<any>): LIST;
 declare function MIDDLEWARE(value: any): bool;
 function transform (middleWare: Array<any>): FN_LIST {
   return function (data: Array<any>): Array<any> {
-    const prev = (value: any, fn: MIDDLEWARE): any => {
+
+    const reducer = (value: any, fn: MIDDLEWARE): any => {
       if (Array.isArray(value)) {
         return value.map((el: any) => fn(el));
       } else {
@@ -41,7 +42,7 @@ function transform (middleWare: Array<any>): FN_LIST {
       }
     };
 
-    const pipe = (fns: Array<any>) => (current: any) => fns.reduce(prev, current);
+    const pipe = (fns: Array<any>) => (current: any) => fns.reduce(reducer, current);
 
     return pipe(middleWare)(data);
   };
