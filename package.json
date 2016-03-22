@@ -50,5 +50,8 @@
     "include": [
       "./src/**/*.js"
     ]
+  },
+  "dependencies": {
+    "is-schema-valid": "^0.1.0"
   }
 }

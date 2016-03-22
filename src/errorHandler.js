@@ -1,6 +1,6 @@
 'use strcit';
 
-import schemaValidation from './schemaValidation';
+import isSchema from 'is-schema-valid';
 
 
 // Flow types
@@ -23,7 +23,7 @@ function elementTypeError (data: Array<any>, type: string) {
 function collectionsError (data: Array<OBJECT>, type: string, schema: OBJECT) {
   if (type === 'collection') {
     if (schema) {
-      schemaValidation(data, schema);
+      data.forEach((element: any) => isSchema(schema)(element));
 
     } else {
       throw new Error('List Collection Error: Collection must have a valid schema.');

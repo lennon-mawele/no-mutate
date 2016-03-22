@@ -179,7 +179,7 @@ test('Immutable List', (nested: OBJECT) => {
     };
 
     const invalidKey = testThrow1();
-    const expectInvalidKey = 'Error: Invalid Schema Error: taste key is not a schema key.';
+    const expectInvalidKey = 'Error: Schema Key Error: A key is not a valid schema key.';
     assert.deepEqual(invalidKey, expectInvalidKey,
       'Does not pass keys not in schema');
 
@@ -198,7 +198,7 @@ test('Immutable List', (nested: OBJECT) => {
     };
 
     const invalidType = testThrow2();
-    const expectInvalidType = 'Error: Invalid Schema Error: quantity value is not number type.';
+    const expectInvalidType = 'Error: Schema Value Error: quantity value is not number type.';
     assert.deepEqual(invalidType, expectInvalidType,
       'Does not pass value if type is not the same as schema key/value');
 
