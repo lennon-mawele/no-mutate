@@ -23,7 +23,11 @@ function elementTypeError (data: Array<any>, type: string) {
 function collectionsError (data: Array<OBJECT>, type: string, schema: OBJECT) {
   if (type === 'collection') {
     if (schema) {
-      data.forEach((element: any) => isSchema(schema)(element));
+      data.forEach((element: any) => {
+        if (!isSchema(schema)(element).valid) {
+          throw new Error(isSchema(schema)(element).message);
+        }
+      });
 
     } else {
       throw new Error('List Collection Error: Collection must have a valid schema.');

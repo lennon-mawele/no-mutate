@@ -52,6 +52,6 @@
     ]
   },
   "dependencies": {
-    "is-schema-valid": "^0.1.0"
+    "is-schema-valid": "~0.1.1"
   }
 }
