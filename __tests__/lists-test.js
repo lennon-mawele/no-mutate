@@ -47,7 +47,7 @@ test('Immutable List', (nested: OBJECT) => {
     const notBoolean = testThrow();
     const expectNotBoolean = 'Error: Type Error: 1 is not of type boolean';
     assert.deepEqual(notBoolean, expectNotBoolean,
-      'Booleans List can only contain booleans.)');
+      'Booleans List can only contain booleans');
 
     const isBoolean = bool.data;
     const expectIsBoolean = [true];

@@ -1,7 +1,7 @@
 -Types
 Date
 
--structtures
+-structures
 Map/ Hash
 Stack
 Queue
@@ -11,5 +11,4 @@ Linked
 
 -Methods
 is
-extend - create a List from a List
-middleware
+clone - create a List from a List
