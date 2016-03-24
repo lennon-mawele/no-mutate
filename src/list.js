@@ -30,8 +30,6 @@ type OPTIONS = {
 type LIST = Array<any>;
 type ITERATOR = { done: bool, vlaue: number };
 declare function FN_BOOL(year: string): bool;
-// declare function FN_LIST(data: Array<any>): LIST;
-// declare function MIDDLEWARE(data: any): bool;
 declare function FROZEN_OBJECT(data: Array<any>, opts: OPTIONS): OBJECT;
 
 
@@ -152,15 +150,14 @@ export function List (data: Array<any>, opts: ?OPTIONS): FROZEN_OBJECT {
     middleware: opts ? opts.middleware || null : null
   };
 
-
-  typeCheckError(options);
+  typeCheckError({ data, ...options });
 
   // transform data elements
-  const transformDataElements = options.middleware ? pipeMiddleware(options.middleware)(data) : data;
+  const transformDataElements = options.middleware ? pipeMiddleware(options.middleware)(data) : data || [];
 
   return createList(transformDataElements || [], Object.assign(
     {},
     options,
-    { methods: { ...listMethod(data, options), ...options.methods } }
+    { methods: { ...listMethod(transformDataElements, options), ...options.methods } }
   ));
 };

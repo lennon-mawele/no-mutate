@@ -1,17 +1,6 @@
 'use strict';
 
-import {
-  // concat,
-  // insert,
-  // pop,
-  push
-  // remove,
-  // reverse,
-  // shift,
-  // sort,
-  // unshift,
-  // update
-} from './methods';
+import { push } from './methods';
 
 
 // Flowtype
@@ -22,10 +11,7 @@ type OPTIONS = {
   schema: ?OBJECT,
   middleware: ?Array<any>
 };
-// type ITERATOR = { done: bool, vlaue: number };
-// type LIST = Array<any>;
 declare function FROZEN_OBJECT(key: string, value: any): OBJECT;
-// declare function FN_BOOL(year: string): bool;
 declare function FN_LIST(data: Array<any>): LIST;
 declare function MIDDLEWARE(data: any): bool;
 

@@ -21,7 +21,7 @@ const {
 
 type OBJECT = { [key: string]: any };
 
-test.skip('Immutable Methods', (nested: OBJECT) => {
+test('Immutable Methods', (nested: OBJECT) => {
 
   nested.test('Add/replace key values :: assign({k1: v1, k2: v2)({k1: u1)', (assert: OBJECT) => {
     const object = {x1: 1, x2: 2};

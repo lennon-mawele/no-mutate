@@ -7,12 +7,7 @@ import index from '../lib';
 // Flow types
 type OBJECT = { [key: string]: any };
 
-const {
-  Booleans,
-  List,
-  Numbers,
-  Strings
-} = index;
+const { List } = index;
 
 
 test('Immutable List', (nested: OBJECT) => {
@@ -38,7 +33,7 @@ test('Immutable List', (nested: OBJECT) => {
 
     const testThrow = (): OBJECT | string => {
       try {
-        return List([1, false], { type: 'boolean' });
+        return List([1, false], { type: 'boolean' }).data;
       } catch (err) {
         return err.toString();
       }
@@ -274,7 +269,7 @@ test('Immutable List', (nested: OBJECT) => {
     const expectDecreaseNumberBy5 = [1, -4];
     assert.deepEqual(decreaseNumberBy5, expectDecreaseNumberBy5,
       'Decease Number List by n.');
-  
+
     assert.end();
   });
 
@@ -577,28 +572,6 @@ test('Immutable List', (nested: OBJECT) => {
   });
 
 
-  nested.test('List collcetion :: List([e0], { type: "collcetion": schema: object }) -> List', (assert: OBJECT) => {
-    const schemaObj = {
-      name    : { type: 'string', required: true },
-      quantity: { type: 'number', required: true },
-      country : 'string'
-    };
-
-    const data = [
-      { name: 'apples', quantity: 2, country: 'england' },
-      { name: 'bananas', quantity: 5, country: 'jamaica' },
-      { name: 'cherries', quantity: 1, country: 'spain' }
-    ];
-
-    const schema = List(data, { type: 'collection', schema: schemaObj }).schema;
-    const expectSchema = schema;
-    assert.deepEqual(schema, expectSchema,
-      'Returns Collections schema');
-
-    assert.end();
-  });
-
-
   nested.test('shift :: List([e0, e1, e2]).shift() -> LIST', (assert: OBJECT) => {
 
     const shiftItem = List([1, 2, 3, 4, 5, 6]).shift().data;
@@ -696,5 +669,4 @@ test('Immutable List', (nested: OBJECT) => {
 
     assert.end();
   });
-
 });

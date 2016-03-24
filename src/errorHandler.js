@@ -10,13 +10,11 @@ type OBJECT = { [key: string]: any };
 function elementTypeError (data: Array<any>, type: string) {
   const dataType = type === 'collection' ? 'object' : type;
 
-  if (Array.isArray(data)) {
-    data.forEach((i: any): void => {
-      if (type !== 'any' && typeof i !== dataType) {
-        throw new Error(`Type Error: ${i} is not of type ${type}`);
-      }
-    });
-  }
+  Array.isArray(data) && data.forEach((el: any): void => {
+    if (type !== 'any' && typeof el !== dataType) {
+      throw new Error(`Type Error: ${el} is not of type ${type}`);
+    }
+  });
 }
 
 
