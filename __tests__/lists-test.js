@@ -226,54 +226,19 @@ test('Immutable List', (nested: OBJECT) => {
   });
 
 
-  nested.test('List middleWare || :: List([e0, e1], { middleWare: [fn, fn] }) -> List', (assert: OBJECT) => {
+  nested.test('List middleware || :: List([e0, e1], { middleware: [fn, fn] }) -> List', (assert: OBJECT) => {
 
-    const middleWare = [
+    const middleware = [
       (x: any) => x.toUpperCase(),
       (x: any) => `${x}_VIGINIE`
     ];
 
-    const list = List(['otis', 'ania', 'jocelyne'], { middleWare });
+    const list = List(['otis', 'ania', 'jocelyne'], { middleware });
 
     const actualList = list.data;
     const expectedList = ['OTIS_VIGINIE', 'ANIA_VIGINIE', 'JOCELYNE_VIGINIE'];
     assert.deepEqual(actualList, expectedList,
-      'Transforms elements with middleWare');
-
-    assert.end();
-  });
-
-  nested.test('Booleans :: Booleans() ->', (assert: OBJECT) => {
-    const bool = Booleans([true]);
-
-    const isBoolean = bool.data;
-    const expectIsBoolean = [true];
-    assert.deepEqual(isBoolean, expectIsBoolean,
-      'Creates a new Boolean List.');
-
-    assert.end();
-  });
-
-
-  nested.test('Numbers :: Numbers() ->', (assert: OBJECT) => {
-    const num = Numbers([1]);
-
-    const isNumber = num.data;
-    const expectIsNumber = [1];
-    assert.deepEqual(isNumber, expectIsNumber,
-      'Creates a Number List.');
-
-    assert.end();
-  });
-
-
-  nested.test('Strings :: Strings()', (assert: OBJECT) => {
-    const str = Strings(['a']);
-
-    const isString = str.data;
-    const expectIsString = ['a'];
-    assert.deepEqual(isString, expectIsString,
-      'Creates a new String List');
+      'Transforms elements with middleware');
 
     assert.end();
   });
@@ -309,8 +274,7 @@ test('Immutable List', (nested: OBJECT) => {
     const expectDecreaseNumberBy5 = [1, -4];
     assert.deepEqual(decreaseNumberBy5, expectDecreaseNumberBy5,
       'Decease Number List by n.');
-
-
+  
     assert.end();
   });
 
