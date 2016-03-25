@@ -37,8 +37,8 @@ export function pipeMiddleware (middleware: Array<any>): FN_LIST {
 // Number List methods
 export function numberMethods (list: Array<any>, options: OPTIONS): OBJECT {
   return options.type === 'number' ? {
-    decrease: (i: number) => createList(push(list.length + (-i || -1))(list), options),
-    increment: (i: number) => createList(push(list.length + (i || 1))(list), options)
+    decrease: (i: number) => createStructure(push(list.length + (-i || -1))(list), options),
+    increment: (i: number) => createStructure(push(list.length + (i || 1))(list), options)
   } : {};
 };
 
@@ -48,7 +48,7 @@ export function transformData (data: Array<any>, middleware: Array<any>): Array<
 }
 
 // Creates a new List
-export function createList (data: Array<any>, options: OPTIONS): FROZEN_OBJECT {
+export function createStructure (data: Array<any>, options: OPTIONS): FROZEN_OBJECT {
   const { type, middleware, methods, schema, size } = options;
 
   // return new List
