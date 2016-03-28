@@ -1,18 +1,18 @@
 'use strict';
 
 import { typeCheckError } from './errorHandler';
-
+import {
+  createStructure,
+  transformData,
+  pipeMiddleware
+} from './base';
 import {
   concat,
-  insert,
-  pop,
-  push,
-  remove,
   reverse,
-  shift,
+  // push,
   sort,
-  unshift,
-  update
+  shift,
+  unshift
 } from './methods';
 
 
@@ -23,178 +23,113 @@ type OPTIONS = {
   methods: ?OBJECT,
   schema: ?OBJECT
 };
-type ITERATOR = { done: bool, vlaue: number };
 type LIST = Array<any>;
-declare function FROZEN_OBJECT(key: string, value: any): OBJECT;
+type ITERATOR = { done: bool, vlaue: number };
 declare function FN_BOOL(year: string): bool;
-declare function FN_LIST(data: Array<any>): LIST;
+declare function FROZEN_OBJECT(data: Array<any>, opts: OPTIONS): OBJECT;
 
 
-declare function MIDDLEWARE(value: any): bool;
-function transform (middleWare: Array<any>): FN_LIST {
-  return function (data: Array<any>): Array<any> {
+const listMethod = (data: Array<any>, options: OPTIONS): OBJECT => {
+  let middleware = options.middleware;
 
-    const reducer = (value: any, fn: MIDDLEWARE): any => {
-      if (Array.isArray(value)) {
-        return value.map((el: any) => fn(el));
-      } else {
-        return fn(value);
-      }
-    };
-
-    const pipe = (fns: Array<any>) => (current: any) => fns.reduce(reducer, current);
-
-    return pipe(middleWare)(data);
-  };
-}
-
-
-// Number List methods
-function numberMethods (list: Array<any>, options: OPTIONS): OBJECT {
-  return options.type === 'number' ? {
-    decrease: (i: number) => createList(push(list.length + (-i || -1))(list), options),
-    increment: (i: number) => createList(push(list.length + (i || 1))(list), options)
-  } : {};
-};
-
-
-// Creates a new List
-function createList (data: Array<any>, options: OPTIONS): FROZEN_OBJECT {
-  const { type, middleWare, methods, schema, size } = options;
-
-  function transformData (): Array<any> {
-    return middleWare ? transform(middleWare)(data) : data;
-  }
-
-  // return new List
-  return Object.freeze(Object.assign(
-    {},
-    {
-      data      : data,
-      size      : data.length,
-      type      : type,
-      maxSize   : size,
-      schema    : schema,
-
-      concat: (newData: Array<any>): LIST => {
-        return createList(concat([transformData(data), ...newData]), options);
-      },
-      entries: (): ITERATOR => {
-        return transformData(data).entries();
-      },
-      every: (fn: FN_BOOL): bool => {
-        return transformData(data).every(fn);
-      },
-      fill: (value: any, start: number, end: number): LIST => {
-        return createList(transformData(data).fill(value, start, end), options);
-      },
-      filter: (fn: FN_BOOL): LIST => {
-        return createList(transformData(data).filter(fn), options);
-      },
-      find: (fn: FN_BOOL): LIST => {
-        return createList(transformData(data).find(fn), options);
-      },
-      first: (): any => {
-        return transformData(data)[0];
-      },
-      findIndex: (fn: FN_BOOL): LIST => {
-        return createList(transformData(data).findIndex(fn), options);
-      },
-      forEach: (fn: FN_BOOL) => {
-        transformData(data).forEach(fn);
-      },
-      head: (): LIST => {
-        return createList(transformData(data).slice(1), options);
-      },
-      includes: (item: any): bool => {
-        return transformData(data).includes(item);
-      },
-      indexOf: (item: any): number => {
-        return transformData(data).indexOf(item);
-      },
-      insert: (index: number, newData: Array<any>): LIST => {
-        return createList(insert(index)(newData, transformData(data)), options);
-      },
-      isEmpty: (): bool => {
-        return transformData(data).length === 0;
-      },
-      join: (separator: string): string => {
-        return transformData(data).join(separator);
-      },
-      map: (fn: FN_BOOL): LIST => {
-        return createList(transformData(data).map(fn), options);
-      },
-      reduce: (fn: FN_BOOL): LIST => {
-        return createList(transformData(data).reduce(fn), options);
-      },
-      reduceRight: (fn: FN_BOOL): LIST => {
-        return createList(transformData(data).reduceRight(fn), options);
-      },
-      last: (): any => {
-        return transformData(data)[transformData(data).length - 1];
-      },
-      lastIndexOf: (item: any): number => {
-        return transformData(data).lastIndexOf(item);
-      },
-      keys: (): ITERATOR => {
-        return transformData(data).keys();
-      },
-      pop: (): LIST => {
-        return createList(pop(transformData(data)), options);
-      },
-      push: (newData: Array<any>): LIST => {
-        return createList(push(newData)(transformData(data)), options);
-      },
-      remove: (newData: Array<any>): LIST => {
-        return createList(remove(newData)(transformData(data)), options);
-      },
-      reverse: (): LIST => {
-        return createList(reverse(transformData(data)), options);
-      },
-      shift: (): LIST => {
-        return createList(shift(transformData(data)), options);
-      },
-      slice: (start: number, end: number): LIST => {
-        return createList(transformData(data).slice(start, end), options);
-      },
-      some: (fn: FN_BOOL): bool => {
-        return transformData(data).some(fn);
-      },
-      sort: (fn: FN_BOOL): LIST => {
-        return createList(sort(transformData(data)), options);
-      },
-      toString: (): string => {
-        return transformData(data).toString();
-      },
-      tail: (): LIST => {
-        return createList(transformData(data).slice(0, transformData(data).length - 1), options);
-      },
-      unshift: (newData: Array<any>): LIST => {
-        return createList(unshift(newData)(transformData(data)), options);
-      },
-      update: (index: number, newData: LIST): LIST => {
-        return createList(update(index)(newData, transformData(data)), options);
-      },
-      ...numberMethods(transformData(data), options),
-      ...methods
+  return {
+    add: (newData: Array<any>): LIST => {
+      return createStructure(unshift(newData)(transformData(data, middleware)), options);
+    },
+    concat: (newData: Array<any>): LIST => {
+      return createStructure(concat([transformData(data, middleware), ...newData]), options);
+    },
+    entries: (): ITERATOR => {
+      return transformData(data, middleware).entries();
+    },
+    every: (fn: FN_BOOL): bool => {
+      return transformData(data, middleware).every(fn);
+    },
+    filter: (fn: FN_BOOL): LIST => {
+      return createStructure(transformData(data, middleware).filter(fn), options);
+    },
+    find: (fn: FN_BOOL): LIST => {
+      return createStructure(transformData(data, middleware).find(fn), options);
+    },
+    findIndex: (fn: FN_BOOL): LIST => {
+      return createStructure(transformData(data, middleware).findIndex(fn), options);
+    },
+    first: (): any => {
+      return transformData(data, middleware)[0];
+    },
+    forEach: (fn: FN_BOOL) => {
+      transformData(data, middleware).forEach(fn);
+    },
+    head: (): LIST => {
+      return createStructure(transformData(data, middleware).slice(1), options);
+    },
+    includes: (item: any): bool => {
+      return transformData(data, middleware).includes(item);
+    },
+    indexOf: (item: any): number => {
+      return transformData(data, middleware).indexOf(item);
+    },
+    isEmpty: (): bool => {
+      return transformData(data, middleware).length === 0;
+    },
+    join: (separator: string): string => {
+      return transformData(data, middleware).join(separator);
+    },
+    map: (fn: FN_BOOL): LIST => {
+      return createStructure(transformData(data, middleware).map(fn), options);
+    },
+    reduce: (fn: FN_BOOL): LIST => {
+      return createStructure(transformData(data, middleware).reduce(fn), options);
+    },
+    reduceRight: (fn: FN_BOOL): LIST => {
+      return createStructure(transformData(data, middleware).reduceRight(fn), options);
+    },
+    last: (): any => {
+      return transformData(data, middleware)[transformData(data).length - 1];
+    },
+    lastIndexOf: (item: any): number => {
+      return transformData(data, middleware).lastIndexOf(item);
+    },
+    keys: (): ITERATOR => {
+      return transformData(data, middleware).keys();
+    },
+    remove: (): LIST => {
+      return createStructure(shift(transformData(data, middleware)), options);
+    },
+    reverse: (): LIST => {
+      return createStructure(reverse(transformData(data, middleware)), options);
+    },
+    some: (fn: FN_BOOL): bool => {
+      return transformData(data, middleware).some(fn);
+    },
+    sort: (fn: FN_BOOL): LIST => {
+      return createStructure(sort(transformData(data, middleware)), options);
+    },
+    toString: (): string => {
+      return transformData(data, middleware).toString();
     }
-  ));
+  };
 };
 
-
-// List data structures
+// Stack data structures
 export default function Stack (data: Array<any>, opts: ?OPTIONS): FROZEN_OBJECT {
-  const type = opts ? opts.type || 'any' : 'any';
-  const methods = opts ? opts.methods || {} : {};
-  const size = opts ? opts.size || Infinity : Infinity;
-  const schema = opts ? opts.schema || null : null;
-  const middleWare = opts ? opts.middleWare || null : null;
 
+  const options = {
+    type: opts ? opts.type || 'any' : 'any',
+    methods: opts ? opts.methods || {} : {},
+    size: opts ? opts.size || Infinity : Infinity,
+    schema: opts ? opts.schema || null : null,
+    middleware: opts ? opts.middleware || null : null
+  };
 
-  typeCheckError({ data, type, schema, size });
+  typeCheckError({ data, ...options });
 
   // transform data elements
-  const transformData = middleWare ? transform(middleWare)(data) : data;
+  const transformDataElements = options.middleware ? pipeMiddleware(options.middleware)(data) : data || [];
 
-  return createList(transformData || [], { type, middleWare, methods, size, schema });
+  return createStructure(transformDataElements || [], Object.assign(
+    {},
+    options,
+    { methods: { ...listMethod(transformDataElements, options), ...options.methods } }
+  ));
 };
