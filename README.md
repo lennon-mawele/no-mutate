@@ -26,6 +26,10 @@ A small library for working with immutable arrays.
 - [Options](#queue-options)
 - [Methods](#queue-methods)
 
+[Scripts](#scripts)
+
+[License](#license)  
+
 
 <a name="methods"></a>
 ## Installation
@@ -54,7 +58,7 @@ var methods = no-mutate.no-mutate;
 ### concat
 Concatenates multiple arrays together and returns a new array.  
 ```
-concat([ [1, 2, 3, 4, 5, 6], ['A', 'B', 'C'] ]); [1, 2, 3, 4, 5, 6, 'A', 'B', 'C']  
+concat([ [1, 2, 3, 4, 5, 6], ['A', 'B', 'C'] ]);
 //=> [1, 2, 3, 4, 5, 6, 'A', 'B', 'C']
 ```
 
@@ -1312,3 +1316,35 @@ var str = Queue([1, 2, 3, 4, 5, 6]).toString();
 
 console.log(str);
 //=> '1,2,3,4,5,6'
+```
+
+
+<a name="scripts"></a>
+## Scripts
+Start/watch
+```
+npm run start
+```
+
+Flow
+```
+npm run flow
+npm run flow:watch
+```
+
+Tests
+```
+npm run test
+npm run test:spec
+npm run test:watch
+```
+
+Build
+```
+npm run build
+```
+
+
+<a name="license"></a>
+## License
+MIT
