@@ -1,5 +1,6 @@
 'use strict';
 
+import deepFreeze from 'deep-freeze-strict';
 import { push } from './methods';
 
 
@@ -52,7 +53,7 @@ export function createStructure (data: Array<any>, options: OPTIONS): FROZEN_OBJ
   const { type, middleware, methods, schema, size } = options;
 
   // return new List
-  return Object.freeze(Object.assign(
+  return deepFreeze(Object.assign(
     {},
     {
       data      : data,
