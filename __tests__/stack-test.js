@@ -24,6 +24,20 @@ test('Immutable Stack', (nested: OBJECT) => {
     assert.deepEqual(createStackWithData, expectCreateStackWithData,
       'Creates an new empty Stack with initial data.');
 
+
+    const testNoMutate = (): OBJECT => {
+      try {
+        Stack([1, 2, 3, 4, 5, 6]).data[0] = 'otis';
+      } catch (err) {
+        return err.toString();
+      }
+    };
+
+    const noMutateListData = testNoMutate();
+    const expectNoMutateListData = 'TypeError: Cannot assign to read only property \'0\' of [object Array]';
+    assert.deepEqual(noMutateListData, expectNoMutateListData,
+      'Cannot mutate Stack.');
+
     assert.end();
   });
 
@@ -137,6 +151,20 @@ test('Immutable Stack', (nested: OBJECT) => {
     const expectIsObject = data;
     assert.deepEqual(isObject, expectIsObject,
       'Creates a new Objects Stack');
+
+
+    const testNoMutate = (): OBJECT => {
+      try {
+        Stack(data, { type: 'object' }).data[0].name = 'otis';
+      } catch (err) {
+        return err.toString();
+      }
+    };
+
+    const noMutateObject = testNoMutate();
+    const expectNoMutateObject = 'TypeError: Cannot assign to read only property \'name\' of [object Object]';
+    assert.deepEqual(noMutateObject, expectNoMutateObject,
+      'Cannot mutate Stack objects.');
 
     assert.end();
   });

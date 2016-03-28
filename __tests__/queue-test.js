@@ -24,6 +24,20 @@ test('Immutable Queue', (nested: OBJECT) => {
     assert.deepEqual(createQueueWithData, expectCreateQueueWithData,
       'Creates an new empty Queue with initial data.');
 
+
+    const testNoMutate = (): OBJECT => {
+      try {
+        Queue([1, 2, 3, 4, 5, 6]).data[0] = 'otis';
+      } catch (err) {
+        return err.toString();
+      }
+    };
+
+    const noMutateListData = testNoMutate();
+    const expectNoMutateListData = 'TypeError: Cannot assign to read only property \'0\' of [object Array]';
+    assert.deepEqual(noMutateListData, expectNoMutateListData,
+      'Cannot mutate Queue.');
+
     assert.end();
   });
 
@@ -137,6 +151,20 @@ test('Immutable Queue', (nested: OBJECT) => {
     const expectIsObject = data;
     assert.deepEqual(isObject, expectIsObject,
       'Creates a new Objects Queue');
+
+
+    const testNoMutate = (): OBJECT => {
+      try {
+        Queue(data, { type: 'object' }).data[0].name = 'otis';
+      } catch (err) {
+        return err.toString();
+      }
+    };
+
+    const noMutateObject = testNoMutate();
+    const expectNoMutateObject = 'TypeError: Cannot assign to read only property \'name\' of [object Object]';
+    assert.deepEqual(noMutateObject, expectNoMutateObject,
+      'Cannot mutate Queue objects.');
 
     assert.end();
   });
