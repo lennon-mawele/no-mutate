@@ -1,9 +1,11 @@
 import * as methods from './methods';
-import * as list from './list';
+import List from './list';
 import Stack from './stack';
+import Queue from './queue';
 
 export default {
   ...methods,
-  ...list,
-  Stack
+  List,
+  Stack,
+  Queue
 };
