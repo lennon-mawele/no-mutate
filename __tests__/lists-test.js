@@ -141,7 +141,7 @@ test('Immutable List', (nested: OBJECT) => {
     assert.end();
   });
 
-  nested.test('List collcetion :: List([e0], { type: "collcetion": schema: object }) -> List', (assert: OBJECT) => {
+  nested.test('List collection :: List([e0], { type: "collcetion": schema: object }) -> List', (assert: OBJECT) => {
     const schema = {
       name    : { type: 'string', required: true },
       quantity: { type: 'number', required: true },
@@ -233,7 +233,7 @@ test('Immutable List', (nested: OBJECT) => {
     const actualList = list.data;
     const expectedList = ['OTIS_VIGINIE', 'ANIA_VIGINIE', 'JOCELYNE_VIGINIE'];
     assert.deepEqual(actualList, expectedList,
-      'Transforms elements with middleware');
+      'Allows custom functions to transforms the data elements before it enters the list.');
 
     assert.end();
   });
@@ -279,7 +279,7 @@ test('Immutable List', (nested: OBJECT) => {
     const concatList = List([1, 2, 3, 4, 5, 6]).concat([ ['A', 'B', 'C'], [7, 8, 9, 10] ]).data;
     const expectConcatList = [1, 2, 3, 4, 5, 6, 'A', 'B', 'C', 7, 8, 9, 10];
     assert.deepEqual(concatList, expectConcatList,
-      'Megres Lists together and returns a new List.');
+      'Concatenates multiple arrays together and returns a new List.');
 
     assert.end();
   });
@@ -290,7 +290,7 @@ test('Immutable List', (nested: OBJECT) => {
     const createListWithData = List([1, 2, 3, 4, 5, 6]).data;
     const expectCreateListWithData = [1, 2, 3, 4, 5, 6];
     assert.deepEqual(createListWithData, expectCreateListWithData,
-      'Creates an new empty List with initial data.');
+      'Returns an array containing the data held within the list.');
 
     assert.end();
   });
@@ -312,7 +312,7 @@ test('Immutable List', (nested: OBJECT) => {
     const everyList = List([11, 12, 13]).every((i: any): bool => i >= 10);
     const expectEveryList = true;
     assert.deepEqual(everyList, expectEveryList,
-      'Every item passed the test. Returns true or false.');
+      'Checks to see if ever element passes a test, specified by a callback. Returns true or false');
 
     assert.end();
   });
@@ -335,7 +335,7 @@ test('Immutable List', (nested: OBJECT) => {
     const filterList = List([1, 2, 3, 4, 5, 6]).filter((i: any): bool => i >= 4).data;
     const expectFilterList = [4, 5, 6];
     assert.deepEqual(filterList, expectFilterList,
-      'Filters items in the List and returns a new List.');
+      'Filters items in the List, specified by a callback and returns a new List.');
 
     assert.end();
   });
@@ -346,7 +346,7 @@ test('Immutable List', (nested: OBJECT) => {
     const findList = List([1, 120, 2, 12]).find((i: any): bool => i > 5).data;
     const expectFindList = 120;
     assert.deepEqual(findList, expectFindList,
-      'Finds items in the List returns a new List. Otherwise undefined is returned.');
+      'Finds items in the List specified by a callback and returns a new List. Otherwise undefined is returned.');
 
     assert.end();
   });
@@ -357,7 +357,7 @@ test('Immutable List', (nested: OBJECT) => {
     const findIndexList = List([1, 2, 3, 4, 5, 6]).findIndex((i: any): bool => i === 5).data;
     const expectFindIndexList = 4;
     assert.deepEqual(findIndexList, expectFindIndexList,
-      'Finds the index of the List item and return index or -1 if it is not present.');
+      'Finds the index of an element in the List item and return index or -1 if it is not present.');
 
     assert.end();
   });
@@ -368,7 +368,7 @@ test('Immutable List', (nested: OBJECT) => {
     const firstList = List([1, 2, 3, 4, 5, 6]).first();
     const expectFirstList = 1;
     assert.deepEqual(firstList, expectFirstList,
-      'Returns first item in the List.');
+      'Returns the first element in the List.');
 
     assert.end();
   });
@@ -390,7 +390,7 @@ test('Immutable List', (nested: OBJECT) => {
     const headList = List([1, 2, 3, 4, 5, 6]).head().data;
     const expectHeadList = [2, 3, 4, 5, 6];
     assert.deepEqual(headList, expectHeadList,
-      'Returns a new array with all but the last element.');
+      'Returns a new array with all but the last element in a List.');
 
     assert.end();
   });
@@ -401,7 +401,7 @@ test('Immutable List', (nested: OBJECT) => {
     const includesList = List([1, 2, 3, 4, 5, 6]).includes(5);
     const expectIncludesList = true;
     assert.deepEqual(includesList, expectIncludesList,
-      'Checks the List includes an item and returns true or false.');
+      'Checks to see if the List includes an element and returns true or false.');
 
     assert.end();
   });
@@ -412,7 +412,7 @@ test('Immutable List', (nested: OBJECT) => {
     const indexOfList = List([1, 2, 3, 4, 5, 6]).indexOf(5);
     const expectIndexOfList = 4;
     assert.deepEqual(indexOfList, expectIndexOfList,
-    'Return first index of an element in the List, or -1 if it is not present.');
+    'Return first index of an element in a List, or -1 if it is not present.');
 
     assert.end();
   });
@@ -423,7 +423,7 @@ test('Immutable List', (nested: OBJECT) => {
     const insertMultipleItems = List([1, 2, 3, 4, 5, 6]).insert(3, ['A', 'B', 'C']).data;
     const expectInsertMultipleItems = [1, 2, 3, 'A', 'B', 'C', 4, 5, 6];
     assert.deepEqual(insertMultipleItems, expectInsertMultipleItems,
-      'Insert items into the List and returns a new List.');
+      'Inserts elements into the List and returns a new List.');
 
     assert.end();
   });
@@ -439,7 +439,7 @@ test('Immutable List', (nested: OBJECT) => {
     const isNotEmptyItems = List([1]).isEmpty();
     const expectIsNotEmptyItems = false;
     assert.deepEqual(isNotEmptyItems, expectIsNotEmptyItems,
-      'List is empty. Returns true or false');
+      'Checks to see if the List is empty (has no elements). Returns true or false');
 
     assert.end();
   });
@@ -450,7 +450,7 @@ test('Immutable List', (nested: OBJECT) => {
     const joinList = List([1, 2, 3, 4, 5, 6]).join(', ');
     const expectJoinList = '1, 2, 3, 4, 5, 6';
     assert.deepEqual(joinList, expectJoinList,
-      'Joins all elements of the List into a string.');
+      'Joins all the elements of the List into a string.');
 
     assert.end();
   });
@@ -461,7 +461,7 @@ test('Immutable List', (nested: OBJECT) => {
     const keysList = List([1, 2, 3, 4, 5, 6]).keys().next();
     const expectKeysList = { value: 0, done: false };
     assert.deepEqual(keysList, expectKeysList,
-      'Array Iterator that contains the keys for each index in the List.');
+      'Returns an Array Iterator that contains the keys for each index in the List.');
 
     assert.end();
   });
@@ -472,7 +472,7 @@ test('Immutable List', (nested: OBJECT) => {
     const lastList = List([1, 2, 3, 4, 5, 6]).last();
     const expectFirstList = 6;
     assert.deepEqual(lastList, expectFirstList,
-      'Returns last item in the List.');
+      'Returns last element in the List.');
 
     assert.end();
   });
@@ -483,7 +483,7 @@ test('Immutable List', (nested: OBJECT) => {
     const indexOfList = List([1, 2, 3, 4, 1]).lastIndexOf(1);
     const expectIndexOfList = 4;
     assert.deepEqual(indexOfList, expectIndexOfList,
-    'Return last index of element in the List, or -1 if it is not present.');
+    'Return the last index of an element in the List, or -1 if it is not present.');
 
     assert.end();
   });
@@ -494,7 +494,7 @@ test('Immutable List', (nested: OBJECT) => {
     const mapList = List([1, 2, 3, 4, 5, 6]).map((e: number) => e + 1).data;
     const expectMapList = [2, 3, 4, 5, 6, 7];
     assert.deepEqual(mapList, expectMapList,
-    'Returns a new List with the results from a provided function called on eash element.');
+    'Returns a new List with the results from a provided function called on each element.');
 
     assert.end();
   });
@@ -505,7 +505,7 @@ test('Immutable List', (nested: OBJECT) => {
     const popItem = List([1, 2, 3, 4, 5, 6]).pop().data;
     const expectPopItem = [1, 2, 3, 4, 5];
     assert.deepEqual(popItem, expectPopItem,
-      'Pop an item from the end of the List and returns a new List.');
+      'Removes an element from the end of the List and returns a new List.');
 
     assert.end();
   });
@@ -516,12 +516,12 @@ test('Immutable List', (nested: OBJECT) => {
     const pushItem = List([1, 2, 3, 4, 5, 6]).push('otis').data;
     const expectPushItem = [1, 2, 3, 4, 5, 6, 'otis'];
     assert.deepEqual(pushItem, expectPushItem,
-      'Push an item to the end of the List and returns a new List.');
+      'Adds an element to the end of the List and returns a new List.');
 
     const pushMultipleItems = List([1, 2, 3, 4, 5, 6]).push(['otis', 'ania']).data;
     const expectMultiplePushItems = [1, 2, 3, 4, 5, 6, 'otis', 'ania'];
     assert.deepEqual(pushMultipleItems, expectMultiplePushItems,
-      'Push an item to the end of the List and returns a new List.');
+      'Adds elements to the end of the List and returns a new List.');
 
     assert.end();
   });
@@ -532,7 +532,7 @@ test('Immutable List', (nested: OBJECT) => {
     const reduceList = List([1, 2, 3, 4, 5, 6]).reduce((p: number, c: number) => p + c).data;
     const expectReduceList = 21;
     assert.deepEqual(reduceList, expectReduceList,
-    'Applies a function against an accumulator and each value of the List (left-to-right). Returns a new List.');
+    'Applies a function against an accumulator to each value of the List (left-to-right). Returns a new List.');
 
     assert.end();
   });
@@ -543,7 +543,7 @@ test('Immutable List', (nested: OBJECT) => {
     const reverseItem = List([1, 2, 3, 4, 5, 6]).reverse().data;
     const expectReverseItem = [6, 5, 4, 3, 2, 1];
     assert.deepEqual(reverseItem, expectReverseItem,
-      'Pop an item from the end of the List and returns a new List.');
+      'Reverse the order of elements in the List and returns a new List.');
 
     assert.end();
   });
@@ -554,7 +554,7 @@ test('Immutable List', (nested: OBJECT) => {
     const reduceRightList = List([1, 2, 3, 4, 5, 6]).reduceRight((p: number, c: number) => p + c).data;
     const expectReduceRightList = 21;
     assert.deepEqual(reduceRightList, expectReduceRightList,
-    'Applies a function against an accumulator and each value of the List (right-to left). Returns a new List.');
+    'Applies a function against an accumulator to each value of the List (right-to left). Returns a new List.');
 
     assert.end();
   });
@@ -565,7 +565,7 @@ test('Immutable List', (nested: OBJECT) => {
     const removeItem = List([1, 2, 3, 4, 5, 6]).remove(1).data;
     const expectRemoveItem = [1, 3, 4, 5, 6];
     assert.deepEqual(removeItem, expectRemoveItem,
-      'Remove an item from the List using it\'s index and returns a new List.');
+      'Remove an element from the List using the specified index and returns a new List.');
 
     assert.end();
 
@@ -577,7 +577,7 @@ test('Immutable List', (nested: OBJECT) => {
     const shiftItem = List([1, 2, 3, 4, 5, 6]).shift().data;
     const expectShiftItem = [2, 3, 4, 5, 6];
     assert.deepEqual(shiftItem, expectShiftItem,
-      'Shift an item from the begining of the List and returns a new List.');
+      'Remove an element from the beginning of the List and returns a new List.');
 
     assert.end();
   });
@@ -588,7 +588,7 @@ test('Immutable List', (nested: OBJECT) => {
     const newListSize = List([1, 2, 3, 4, 5, 6]).size;
     const expectNewListSize = 6;
     assert.deepEqual(newListSize, expectNewListSize,
-      'List has the correct size.');
+      'Returns the the number of elements held within the List.');
 
     assert.end();
   });
@@ -610,7 +610,7 @@ test('Immutable List', (nested: OBJECT) => {
     const someList = List([11, 5, 13, 3]).some((i: any): bool => i >= 10);
     const expectSomeList = true;
     assert.deepEqual(someList, expectSomeList,
-      'Tests whether some element are in the List. Returns true or false.');
+      'Checks to see if the List has some element against a provide function. Returns true or false.');
 
     assert.end();
   });
@@ -621,7 +621,7 @@ test('Immutable List', (nested: OBJECT) => {
     const sortList = List(['d', 'f', 'a', 'x']).sort().data;
     const expectSortList = [ 'a', 'd', 'f', 'x' ];
     assert.deepEqual(sortList, expectSortList,
-      'Sorts the items elements in a List in the correct order and returns a new List.');
+      'Sorts the elements in a List in the correct order and returns a new List.');
 
     assert.end();
   });
@@ -632,7 +632,7 @@ test('Immutable List', (nested: OBJECT) => {
     const tailList = List([1, 2, 3, 4, 5, 6]).tail().data;
     const expectTailList = [1, 2, 3, 4, 5];
     assert.deepEqual(tailList, expectTailList,
-      'Returns a new array with all but the first element.');
+      'Returns a new List with all but the first element.');
 
     assert.end();
   });
@@ -654,7 +654,7 @@ test('Immutable List', (nested: OBJECT) => {
     const unshiftMultipleItems = List([1, 2, 3, 4, 5, 6]).unshift(['A', 'B', 'C']).data;
     const expectUnshiftMultipletems = ['A', 'B', 'C', 1, 2, 3, 4, 5, 6];
     assert.deepEqual(unshiftMultipleItems, expectUnshiftMultipletems,
-      'Unshift multiple items at begining of the list and returns a new list.');
+      'Adds multiple elemets at the beginning of the list and returns a new list.');
 
     assert.end();
   });
@@ -665,8 +665,7 @@ test('Immutable List', (nested: OBJECT) => {
     const upadteItem = List([1, 2, 3, 4, 5, 6]).update(3, 'A').data;
     const expectUpadteItem = [1, 2, 3, 'A', 5, 6];
     assert.deepEqual(upadteItem, expectUpadteItem,
-      'Update an item in the List and returns a new list.');
-
+      'Replaces an elemet in the List at the specified index and returns a new list.');
     assert.end();
   });
 });
