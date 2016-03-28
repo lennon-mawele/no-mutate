@@ -106,8 +106,8 @@ const listMethod = (data: Array<any>, options: OPTIONS): OBJECT => {
     push: (newData: Array<any>): LIST => {
       return createStructure(push(newData)(transformData(data, middleware)), options);
     },
-    remove: (newData: Array<any>): LIST => {
-      return createStructure(remove(newData)(transformData(data, middleware)), options);
+    remove: (index: number): LIST => {
+      return createStructure(remove(index)(transformData(data, middleware)), options);
     },
     reverse: (): LIST => {
       return createStructure(reverse(transformData(data, middleware)), options);
@@ -139,8 +139,9 @@ const listMethod = (data: Array<any>, options: OPTIONS): OBJECT => {
   };
 };
 
+
 // List data structures
-export function List (data: Array<any>, opts: ?OPTIONS): FROZEN_OBJECT {
+export default function List (data: Array<any>, opts: ?OPTIONS): FROZEN_OBJECT {
 
   const options = {
     type: opts ? opts.type || 'any' : 'any',
