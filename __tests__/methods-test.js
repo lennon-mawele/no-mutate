@@ -1,5 +1,5 @@
 import test from 'tape';
-import deepFreeze from 'deep-freeze';
+import deepFreeze from 'deep-freeze-strict';
 
 import index from '../lib';
 
