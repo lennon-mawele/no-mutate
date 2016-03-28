@@ -216,7 +216,7 @@ var data = [
 var obj = List(data, { type: 'object' });
 ```
 
-Only accepts collections. A schema is also required. See [is-schema-valid](https://=>github.com/otissv/is-schema-valid.git) for how to create a schema.
+Only accepts collections. A schema is also required. See [is-schema-valid](https://github.com/otissv/is-schema-valid) for how to create a schema.
 
 ```
 var schema = {
@@ -641,7 +641,7 @@ var data = [
 var obj = Stack(data, { type: 'object' });
 ```
 
-Only accepts collections. A schema is also required. See [is-schema-valid](https://=>github.com/otissv/is-schema-valid.git) for how to create a schema.
+Only accepts collections. A schema is also required. See [is-schema-valid](https://github.com/otissv/is-schema-valid) for how to create a schema.
 
 ```
 var schema = {
@@ -1008,7 +1008,7 @@ var data = [
 var obj = Queue(data, { type: 'object' });
 ```
 
-Only accepts collections. A schema is also required. See [is-schema-valid](https://=>github.com/otissv/is-schema-valid.git) for how to create a schema.
+Only accepts collections. A schema is also required. See [is-schema-valid](https://github.com/otissv/is-schema-valid) for how to create a schema.
 
 ```
 var schema = {
