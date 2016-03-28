@@ -3,12 +3,12 @@ Date
 
 -structures
 Map/ Hash
-Stack
-Queue
 Set
 Range
-Linked
 
 -Methods
 is
 clone - create a List from a List
+
+
+deep freeze all structures
