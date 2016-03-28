@@ -153,7 +153,7 @@ update(3)('A', [1, 2, 3, 4, 5, 6]);
 
 <a name="structures"></a>
 ## Structures
-Structures are wrapper around an arrays to make them immutable and contain methods for working with those arrays. As data is stored is a plain JavaScript array all of the built-in JavaScript methods can be used on it.
+Structures are wrapper around an arrays to make them immutable and contain methods for working with those arrays. As data is stored is a plain JavaScript array, all of the built-in JavaScript methods  that do not mutate arrays can be used on it.
 
 <hr>
 
