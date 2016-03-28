@@ -1,7 +1,7 @@
 {
   "name": "no-mutate",
   "version": "1.0.0",
-  "description": "immutable array and object functions",
+  "description": "A small library for working with immutable arrays.",
   "main": "./lib/index.js",
   "scripts": {
     "start": "webpack --config --watch || true",
